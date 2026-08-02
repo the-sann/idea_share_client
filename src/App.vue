@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import Login from "./scenes/Auth/Login.vue";
-</script>
+<script setup lang="ts"></script>
 
-<template><Login /></template>
+<template>
+  <router-view />
+</template>

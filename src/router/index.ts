@@ -1,14 +1,56 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from "../scenes/Auth/Login.vue";
+import Login from "@/scenes/Auth/Login.vue";
+import Register from "@/scenes/Auth/Register.vue";
+import Home from "@/scenes/Home/Home.vue";
+import { useAuthStore } from "@/stores/auth";
+import ProfileForm from "@/scenes/Home/pages/ProfileForm.vue";
+import PostForm from "@/scenes/Home/pages/PostForm.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: "/login",
+      path: "/",
+      name: "login",
       component: Login,
     },
+    {
+      path: "/register",
+      name: "register",
+      component: Register,
+    },
+    {
+      path: "/home",
+      name: "home",
+      component: Home,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: "/editprofile",
+      name: "edit-profile",
+      component: ProfileForm,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: "/postform",
+      name: "post-form",
+      component: PostForm,
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
+});
+router.beforeEach((to) => {
+  const authStore = useAuthStore();
+
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    return { name: "login" };
+  }
 });
 
 export default router;
