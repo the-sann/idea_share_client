@@ -14,6 +14,10 @@ interface Profile {
 interface User {
   id: number;
   name: string;
+  followers_count: number;
+  following_count: number;
+  is_following: boolean;
+  username: string;
   email: string;
   email_verified_at: string | null;
   created_at: string;
@@ -33,6 +37,7 @@ interface Post {
   id: number;
   title: string;
   body: string;
+  slug: string;
   image: string | null;
   author_id: number;
   category_id: number;

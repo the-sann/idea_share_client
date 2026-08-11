@@ -5,6 +5,8 @@ import Home from "@/scenes/Home/Home.vue";
 import { useAuthStore } from "@/stores/auth";
 import ProfileForm from "@/scenes/Home/pages/ProfileForm.vue";
 import PostForm from "@/scenes/Home/pages/PostForm.vue";
+import PostDetail from "@/scenes/Home/pages/PostDetail.vue";
+import PublicProfile from "@/scenes/Home/pages/PublicProfile.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -42,6 +44,16 @@ const router = createRouter({
       meta: {
         requiresAuth: true,
       },
+    },
+    {
+      path: "/@:username/:slug",
+      name: "post-show",
+      component: PostDetail,
+    },
+    {
+      path: "/@:username",
+      name: "public-profile",
+      component: PublicProfile,
     },
   ],
 });

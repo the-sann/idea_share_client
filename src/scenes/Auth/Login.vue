@@ -11,6 +11,7 @@ const isLoading = ref(false);
 const errorMessage = ref("");
 const emailError = ref("");
 const passwordError = ref("");
+const usernameError = ref("");
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -43,6 +44,10 @@ const handleLogin = async () => {
 
     if (errors?.password) {
       passwordError.value = errors.password[0];
+    }
+
+    if (errors?.username) {
+      usernameError.value = errors.username[0];
     }
 
     // General error
@@ -91,7 +96,6 @@ const handleLogin = async () => {
                 : 'border-gray-300 focus:border-gray-500 focus:ring-gray-200',
             ]"
           />
-
           <p v-if="emailError" class="mt-1 text-sm text-red-500">
             {{ emailError }}
           </p>

@@ -3,24 +3,30 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { X } from "lucide-vue-next";
 import { createPost } from "@/services/post.service";
+import { useCategories } from "@/composables/useCategories";
 
 const router = useRouter();
 
 const title = ref("");
 const body = ref("");
-const categoryId = ref<number | null>(null);
-
 const image = ref<File | null>(null);
-
 const loading = ref(false);
 const message = ref("");
+
+const { categories, selectedCategory } = useCategories();
 
 const handleImageChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
 
-  if (target.files && target.files.length > 0) {
-    image.value = target.files[0];
-  }
+  if (!target.files?.length) return;
+
+  image.value = target.files[0];
+};
+const removeImage = () => {
+  image.value = null;
+
+  const input = document.getElementById("image") as HTMLInputElement;
+  if (input) input.value = "";
 };
 
 const save = async () => {
@@ -33,8 +39,8 @@ const save = async () => {
     formData.append("title", title.value);
     formData.append("body", body.value);
 
-    if (categoryId.value) {
-      formData.append("category_id", String(categoryId.value));
+    if (selectedCategory.value) {
+      formData.append("category_id", String(selectedCategory.value));
     }
 
     if (image.value) {
@@ -69,18 +75,19 @@ const save = async () => {
     >
       <div class="flex justify-center gap-3">
         <span class="font-medium"> Upload Post Image </span>
-
         <svg
-          class="size-6"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
           fill="none"
-          stroke="currentColor"
           viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-6"
         >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            stroke-width="1.5"
-            d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75"
+            d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m0-3-3-3m0 0-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75"
           />
         </svg>
       </div>
@@ -92,6 +99,25 @@ const save = async () => {
         @change="handleImageChange"
       />
     </label>
+    <div
+      v-if="image"
+      class="mt-4 flex items-center justify-between rounded-lg border bg-gray-50 px-4 py-3"
+    >
+      <div class="flex items-center gap-2 overflow-hidden">
+        📎
+        <span class="truncate">
+          {{ image.name }}
+        </span>
+      </div>
+
+      <button
+        type="button"
+        @click="removeImage"
+        class="text-red-500 hover:text-red-700"
+      >
+        ✕
+      </button>
+    </div>
 
     <!-- Title -->
     <div>
@@ -108,25 +134,31 @@ const save = async () => {
     <!-- Body -->
     <div>
       <label class="mb-1 block font-medium"> Content </label>
-
       <textarea
         v-model="body"
         rows="6"
         placeholder="Write your post..."
-        class="w-full resize-none rounded-lg border p-3 outline-none focus:border-black"
+        class="w-full resize-none rounded-lg border p-3 px-4 outline-none focus:border-black"
       ></textarea>
     </div>
-
     <!-- Category -->
     <div>
-      <label class="mb-1 block font-medium"> Category ID </label>
+      <label class="mb-1 block font-medium">Category</label>
 
-      <input
-        v-model.number="categoryId"
-        type="number"
-        placeholder="1"
+      <select
+        v-model="selectedCategory"
         class="w-full rounded-lg border p-3 outline-none focus:border-black"
-      />
+      >
+        <option :value="null" disabled>Select a category</option>
+
+        <option
+          v-for="category in categories"
+          :key="category.id"
+          :value="category.id"
+        >
+          {{ category.name }}
+        </option>
+      </select>
     </div>
 
     <!-- Buttons -->

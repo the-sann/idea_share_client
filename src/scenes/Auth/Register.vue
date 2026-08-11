@@ -10,6 +10,7 @@ const authStore = useAuthStore();
 const name = ref("");
 const email = ref("");
 const password = ref("");
+const username = ref("");
 const confirmPassword = ref("");
 const isLoading = ref(false);
 
@@ -21,6 +22,7 @@ const handleRegister = async () => {
       name: name.value,
       email: email.value,
       password: password.value,
+      username: username.value,
       password_confirmation: confirmPassword.value,
     });
     authStore.setAuth(response.data.token, response.data.user);
@@ -53,6 +55,21 @@ const handleRegister = async () => {
             v-model="name"
             type="text"
             placeholder="Enter your full name"
+            :disabled="isLoading"
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition disabled:cursor-not-allowed disabled:bg-gray-100 focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
+          />
+        </div>
+
+        <!-- Username -->
+        <div>
+          <label class="mb-2 block text-sm font-medium text-gray-700">
+            Username
+          </label>
+
+          <input
+            v-model="username"
+            type="text"
+            placeholder="Enter your username"
             :disabled="isLoading"
             class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition disabled:cursor-not-allowed disabled:bg-gray-100 focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
           />
