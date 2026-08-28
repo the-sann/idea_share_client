@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type Ref } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { ArrowLeft, Heart, MessagesSquare, Share2 } from "lucide-vue-next";
 
