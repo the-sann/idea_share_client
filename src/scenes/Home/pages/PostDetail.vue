@@ -11,7 +11,7 @@ import { usePost } from "@/composables/usePostDetail";
 const route = useRoute();
 const username = computed(() => route.params.username as string);
 const slug = computed(() => route.params.slug as string);
-const baseUrl = import.meta.env.VITE_API_URL;
+const assetBaseUrl = import.meta.env.VITE_ASSET_URL;
 // Post query
 const { post, postLoading, postError, postFetching } = usePost(username, slug);
 
@@ -56,7 +56,7 @@ const handleFollow = () => {
       <!-- Image -->
       <img
         v-if="post.image"
-        :src="`${baseUrl}/storage/${post.image}`"
+        :src="`${assetBaseUrl}/storage/${post.image}`"
         :alt="post.title"
         class="mt-6 mb-6 w-full h-64 object-cover"
       />
