@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/stores/auth";
 import { useRouter } from "vue-router";
-import { X, SquarePen } from "lucide-vue-next";
+import { X, SquarePen, RouteIcon } from "lucide-vue-next";
 
 const baseUrl = import.meta.env.VITE_API_URL;
 const router = useRouter();
@@ -20,6 +20,18 @@ const handleLogout = () => {
 };
 const goToEditProfile = () => {
   router.push({ name: "edit-profile" });
+};
+const goToProfile = () => {
+  if (!authStore.user?.username) return;
+
+  router.push({
+    name: "public-profile",
+    params: {
+      username: authStore.user.username,
+    },
+  });
+
+  emit("close");
 };
 </script>
 
@@ -55,6 +67,13 @@ const goToEditProfile = () => {
               :src="`${baseUrl}/storage/${authStore.user?.profile?.profile_image}`"
               class="size-20 rounded object-cover border"
             />
+            <button
+              class="flex items-center gap-2 py-4 font-medium text-gray-900"
+              @click="goToProfile"
+            >
+              <RouteIcon :size="18" />
+              View Profile
+            </button>
           </div>
           <div class="grid grid-cols-1 gap-1 py-3">
             <dt class="font-medium text-gray-900">User Name</dt>

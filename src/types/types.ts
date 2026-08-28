@@ -23,6 +23,7 @@ interface User {
   created_at: string;
   updated_at: string;
   profile: Profile | null;
+  posts?: Post[];
 }
 interface LoginPayload {
   email: string;
