@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import type { User, Post } from "@/types/types";
 import PostCard from "../PostCard.vue";
@@ -27,13 +26,11 @@ const handleFollow = () => {
       v-if="props.user"
       class="bg-white p-4 ring-2 ring-indigo-50 sm:p-6"
     >
-      <div
-        class="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6"
-      >
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
         <!-- Avatar -->
         <img
-          v-if="props.user.profile?.image"
-          :src="`${assetBaseUrl}/storage/${props.user.profile.image}`"
+          v-if="props.user.profile?.profile_image"
+          :src="`${assetBaseUrl}/storage/${props.user.profile.profile_image}`"
           :alt="props.user.name"
           class="size-16 rounded-full object-cover sm:size-20"
         />
@@ -105,13 +102,9 @@ const handleFollow = () => {
     <!-- Posts -->
     <section>
       <div class="mb-4">
-        <h2 class="text-xl font-bold">
-          Posts
-        </h2>
+        <h2 class="text-xl font-bold">Posts</h2>
 
-        <p class="text-sm text-gray-500">
-          Posts by {{ props.user?.name }}
-        </p>
+        <p class="text-sm text-gray-500">Posts by {{ props.user?.name }}</p>
       </div>
 
       <!-- No posts -->
@@ -119,20 +112,13 @@ const handleFollow = () => {
         v-if="props.posts.length === 0"
         class="rounded-lg border border-gray-200 bg-white p-8 text-center"
       >
-        <p class="text-gray-500">
-          This user hasn't created any posts yet.
-        </p>
+        <p class="text-gray-500">This user hasn't created any posts yet.</p>
       </div>
 
       <!-- Post list -->
       <div v-else class="space-y-4">
-        <PostCard
-          v-for="post in props.posts"
-          :key="post.id"
-          :post="post"
-        />
+        <PostCard v-for="post in props.posts" :key="post.id" :post="post" />
       </div>
     </section>
   </div>
 </template>
-

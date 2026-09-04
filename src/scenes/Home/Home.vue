@@ -8,7 +8,7 @@ import Layout from "@/components/App/layout.vue";
 import Loading from "@/components/App/loading.vue";
 import PostCard from "./PostCard.vue";
 
-import { postsQuery, postByCategoryQuery } from "@/queries/posts/post.queries";
+import { postsQuery } from "@/queries/posts/post.queries";
 
 import { useCategories } from "@/composables/useCategories.ts";
 
@@ -47,13 +47,7 @@ const categoryId = computed<number | null>(() => {
 |--------------------------------------------------------------------------
 */
 
-const query = computed(() => {
-  if (categoryId.value === null) {
-    return postsQuery();
-  }
-
-  return postByCategoryQuery(categoryId.value);
-});
+const query = computed(() => postsQuery(categoryId.value));
 
 const {
   data: posts,
