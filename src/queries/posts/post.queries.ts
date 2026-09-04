@@ -1,5 +1,9 @@
 import { queryOptions } from "@tanstack/vue-query";
-import { getPosts, getPostBySlug } from "@/services/post.service";
+import {
+  getPosts,
+  getPostBySlug,
+  getPostByCategory,
+} from "@/services/post.service";
 import { postKeys } from "./post.keys";
 
 export const postsQuery = (categoryId: number | null = null) =>
@@ -21,5 +25,12 @@ export const postQuery = (username: string, slug: string) =>
 
     staleTime: 30 * 1000,
 
+    gcTime: 10 * 60 * 1000,
+  });
+export const postByCategoryQuery = (categoryId: number) =>
+  queryOptions({
+    queryKey: postKeys.category(categoryId),
+    queryFn: () => getPostByCategory(categoryId),
+    staleTime: 30 * 1000,
     gcTime: 10 * 60 * 1000,
   });

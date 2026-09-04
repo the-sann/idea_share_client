@@ -10,4 +10,6 @@ export const postKeys = {
 
   detail: (username: string, slug: string) =>
     [...postKeys.details(), username, slug] as const,
+  category: (categoryId: number) =>
+    [...postKeys.all, "category", categoryId] as const,
 };

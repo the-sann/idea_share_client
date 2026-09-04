@@ -50,3 +50,8 @@ export const getPostBySlug = async (
 
   return response.data.data;
 };
+
+export const getPostByCategory = async (categoryId: number) => {
+  const response = await api.get(`/v1/category/${categoryId}`);
+  return response.data.data;
+};
