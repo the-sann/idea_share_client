@@ -38,6 +38,14 @@ const router = createRouter({
     },
 
     {
+      path: "/home/category/:categoryId",
+      name: "home-category",
+      component: Home,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: "/editprofile",
       name: "edit-profile",
       component: ProfileForm,
