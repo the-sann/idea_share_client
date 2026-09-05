@@ -2,11 +2,8 @@
 import type { User, Post } from "@/types/types";
 import PostCard from "../PostCard.vue";
 import { useFollow } from "@/composables/useFollow";
-<<<<<<< HEAD
 import { useAuthStore } from "@/stores/auth.ts";
 import router from "@/router/index.ts";
-=======
->>>>>>> origin/main
 
 const props = defineProps<{
   user: User | null;
@@ -16,10 +13,7 @@ const props = defineProps<{
 const followMutation = useFollow();
 
 const assetBaseUrl = import.meta.env.VITE_API_URL;
-<<<<<<< HEAD
 const authStore = useAuthStore();
-=======
->>>>>>> origin/main
 
 const handleFollow = () => {
   // User is not logged in
@@ -56,7 +50,7 @@ const handleFollow = () => {
           class="size-16 rounded-full object-cover sm:size-20"
         />
 
-        <!-- Default avatar if user has no image -->
+        <!-- Default avatar -->
         <div
           v-else
           class="flex size-16 shrink-0 items-center justify-center rounded-full bg-gray-200 text-xl font-semibold text-gray-600 sm:size-20"
@@ -75,7 +69,6 @@ const handleFollow = () => {
                 {{ props.user.name }}
               </h2>
 
-<<<<<<< HEAD
               <!-- Username + Career -->
               <div class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
                 <p class="text-sm text-gray-500">@{{ props.user.username }}</p>
@@ -96,32 +89,10 @@ const handleFollow = () => {
 
                 <span class="text-sm text-gray-500"> followers </span>
               </div>
-=======
-              <p class="mt-1 text-sm text-gray-500">
-                @{{ props.user.username }}
-              </p>
-
-              <p
-                v-if="props.user.profile?.career"
-                class="mt-2 text-sm text-gray-600"
-              >
-                {{ props.user.profile.career }}
-              </p>
->>>>>>> origin/main
             </div>
 
             <!-- Follow section -->
             <div class="flex shrink-0 items-center gap-3">
-<<<<<<< HEAD
-=======
-              <p class="whitespace-nowrap text-sm text-gray-600">
-                <span class="font-semibold text-gray-900">
-                  {{ props.user.followers_count ?? 0 }}
-                </span>
-                Followers
-              </p>
-
->>>>>>> origin/main
               <button
                 type="button"
                 :disabled="followMutation.isPending.value"
