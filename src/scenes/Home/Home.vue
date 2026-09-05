@@ -5,15 +5,20 @@ import { useRoute, useRouter } from "vue-router";
 import { useQuery } from "@tanstack/vue-query";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import AppLayout from "@/components/App/layout.vue";
 import GuestLayout from "@/components/App/guest-layout.vue";
 =======
 import Layout from "@/components/App/layout.vue";
 >>>>>>> 9cbf995ecf03db4d448b5a04f2898d4c94f2e7ab
+=======
+import Layout from "@/components/App/layout.vue";
+>>>>>>> origin/main
 import Loading from "@/components/App/loading.vue";
 import PostCard from "./PostCard.vue";
 
 import { postsQuery } from "@/queries/posts/post.queries";
+<<<<<<< HEAD
 <<<<<<< HEAD
 import { useCategories } from "@/composables/useCategories";
 import { useAuthStore } from "@/stores/auth";
@@ -23,13 +28,18 @@ const authStore = useAuthStore();
 const router = useRouter();
 const route = useRoute();
 =======
+=======
+>>>>>>> origin/main
 
 import { useCategories } from "@/composables/useCategories.ts";
 
 const router = useRouter();
 const route = useRoute();
 
+<<<<<<< HEAD
 >>>>>>> 9cbf995ecf03db4d448b5a04f2898d4c94f2e7ab
+=======
+>>>>>>> origin/main
 const { categories } = useCategories();
 
 const showScrollTop = ref(false);
@@ -40,6 +50,7 @@ const showScrollTop = ref(false);
 |--------------------------------------------------------------------------
 |
 <<<<<<< HEAD
+<<<<<<< HEAD
 | /                -> null
 | /category/1      -> 1
 | /category/2      -> 2
@@ -48,11 +59,17 @@ const showScrollTop = ref(false);
 | /home/category/1         -> 1
 | /home/category/2         -> 2
 >>>>>>> 9cbf995ecf03db4d448b5a04f2898d4c94f2e7ab
+=======
+| /home                    -> null
+| /home/category/1         -> 1
+| /home/category/2         -> 2
+>>>>>>> origin/main
 |
 */
 const categoryId = computed<number | null>(() => {
   const value = route.params.categoryId;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   if (!value) return null;
 
@@ -61,6 +78,8 @@ const categoryId = computed<number | null>(() => {
 });
 
 =======
+=======
+>>>>>>> origin/main
   if (!value) {
     return null;
   }
@@ -76,7 +95,10 @@ const categoryId = computed<number | null>(() => {
 |--------------------------------------------------------------------------
 */
 
+<<<<<<< HEAD
 >>>>>>> 9cbf995ecf03db4d448b5a04f2898d4c94f2e7ab
+=======
+>>>>>>> origin/main
 const query = computed(() => postsQuery(categoryId.value));
 
 const {
@@ -88,11 +110,14 @@ const {
 } = useQuery(query);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const goToCategory = (id: number) => {
   router.push({
     name: "home-category",
     params: { categoryId: id },
 =======
+=======
+>>>>>>> origin/main
 /*
 |--------------------------------------------------------------------------
 | Navigation
@@ -105,11 +130,15 @@ const goToCategory = (id: number) => {
     params: {
       categoryId: id,
     },
+<<<<<<< HEAD
 >>>>>>> 9cbf995ecf03db4d448b5a04f2898d4c94f2e7ab
+=======
+>>>>>>> origin/main
   });
 };
 
 const goToAllPosts = () => {
+<<<<<<< HEAD
 <<<<<<< HEAD
   router.push({ name: "home" });
 };
@@ -118,6 +147,8 @@ const goToPostForm = () => {
   router.push({ name: "post-form" });
 };
 =======
+=======
+>>>>>>> origin/main
   router.push({
     name: "home",
   });
@@ -134,7 +165,10 @@ const goToPostForm = () => {
 | Scroll
 |--------------------------------------------------------------------------
 */
+<<<<<<< HEAD
 >>>>>>> 9cbf995ecf03db4d448b5a04f2898d4c94f2e7ab
+=======
+>>>>>>> origin/main
 
 const handleScroll = () => {
   showScrollTop.value = window.scrollY > 300;
@@ -164,9 +198,12 @@ onUnmounted(() => {
         <h1 class="text-2xl">Share Your Idea Now!</h1>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         <!-- Only show Add button when logged in -->
 =======
 >>>>>>> 9cbf995ecf03db4d448b5a04f2898d4c94f2e7ab
+=======
+>>>>>>> origin/main
         <button
           v-if="authStore.isAuthenticated"
           @click="goToPostForm"
@@ -198,6 +235,7 @@ onUnmounted(() => {
           </button>
 
           <!-- Categories -->
+<<<<<<< HEAD
           <button
             role="tab"
             :aria-selected="categoryId === null"
@@ -212,6 +250,8 @@ onUnmounted(() => {
             All
           </button>
 
+=======
+>>>>>>> origin/main
           <button
             v-for="category in categories"
             :key="category.id"

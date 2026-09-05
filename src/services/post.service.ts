@@ -50,14 +50,11 @@ export const getPostBySlug = async (
 
   return response.data.data;
 };
-<<<<<<< HEAD
+
 export const getPostByCategory = async (
   categoryId: number,
 ): Promise<Post[]> => {
-=======
-
-export const getPostByCategory = async (categoryId: number): Promise<Post[]> => {
->>>>>>> 9cbf995ecf03db4d448b5a04f2898d4c94f2e7ab
   const response = await api.get(`/v1/category/${categoryId}`);
+
   return response.data.data;
 };

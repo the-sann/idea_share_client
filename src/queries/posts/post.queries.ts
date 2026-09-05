@@ -29,3 +29,10 @@ export const postByCategoryQuery = (categoryId: number) =>
     staleTime: 30 * 1000,
     gcTime: 10 * 60 * 1000,
   });
+export const postByCategoryQuery = (categoryId: number) =>
+  queryOptions({
+    queryKey: postKeys.category(categoryId),
+    queryFn: () => getPostByCategory(categoryId),
+    staleTime: 30 * 1000,
+    gcTime: 10 * 60 * 1000,
+  });
