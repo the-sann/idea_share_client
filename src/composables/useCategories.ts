@@ -23,7 +23,6 @@ export function useCategories() {
     categoriesError,
     categoriesErrorMessage,
     categoriesFetching,
-
     refetchCategories,
   };
 }

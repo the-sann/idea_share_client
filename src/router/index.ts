@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+
+import Home from "@/scenes/Home/Home.vue";
 import Login from "@/scenes/Auth/Login.vue";
 import Register from "@/scenes/Auth/Register.vue";
-import Home from "@/scenes/Home/Home.vue";
-import { useAuthStore } from "@/stores/auth";
+
 import ProfileForm from "@/scenes/Home/pages/ProfileForm.vue";
 import PostForm from "@/scenes/Home/pages/PostForm.vue";
 import PostDetail from "@/scenes/Home/pages/PostDetail.vue";
@@ -10,9 +12,22 @@ import PublicProfile from "@/scenes/Home/pages/PublicProfile.vue";
 
 const router = createRouter({
   history: createWebHistory(),
+
   routes: [
     {
       path: "/",
+      name: "home",
+      component: Home,
+    },
+    {
+      path: "/category/:categoryId",
+      name: "home-category",
+      component: Home,
+      props: true,
+    },
+
+    {
+      path: "/login",
       name: "login",
       component: Login,
     },
@@ -21,30 +36,20 @@ const router = createRouter({
       name: "register",
       component: Register,
     },
-    {
-      path: "/home",
-      name: "home",
-      component: Home,
-      meta: {
-        requiresAuth: true,
-      },
-    },
+
     {
       path: "/editprofile",
       name: "edit-profile",
       component: ProfileForm,
-      meta: {
-        requiresAuth: true,
-      },
+      meta: { requiresAuth: true },
     },
     {
       path: "/postform",
       name: "post-form",
       component: PostForm,
-      meta: {
-        requiresAuth: true,
-      },
+      meta: { requiresAuth: true },
     },
+
     {
       path: "/@:username/:slug",
       name: "post-show",
@@ -57,11 +62,17 @@ const router = createRouter({
     },
   ],
 });
+
 router.beforeEach((to) => {
   const authStore = useAuthStore();
 
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    return { name: "login" };
+    return {
+      name: "login",
+      query: {
+        redirect: to.fullPath,
+      },
+    };
   }
 });
 

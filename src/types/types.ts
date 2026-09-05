@@ -25,6 +25,7 @@ interface User {
   profile: Profile | null;
   posts?: Post[];
 }
+
 interface LoginPayload {
   email: string;
   password: string;
@@ -34,6 +35,7 @@ interface Category {
   id: number;
   name: string;
 }
+
 interface Post {
   id: number;
   title: string;
@@ -42,9 +44,11 @@ interface Post {
   image: string | null;
   author_id: number;
   category_id: number;
+  likes_count: number;
   author: User;
   category: Category;
   created_at: string;
   updated_at: string;
 }
+
 export type { Profile, User, LoginPayload, Category, Post };

@@ -8,7 +8,6 @@ export const userQuery = () =>
 
     queryFn: async () => {
       const response = await getUser();
-
       return response.data;
     },
 

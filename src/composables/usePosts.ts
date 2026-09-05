@@ -7,13 +7,10 @@ export function usePosts(selectedCategory: Ref<number | null>) {
 
   return {
     posts: query.data,
-
     postsLoading: query.isPending,
     postsError: query.isError,
     postsFetching: query.isFetching,
-
     postsErrorMessage: query.error,
-
     refetchPosts: query.refetch,
   };
 }

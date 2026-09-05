@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import { ArrowLeft, Heart, MessagesSquare, Share2 } from "lucide-vue-next";
+import {
+  ArrowLeft,
+  Heart,
+  MessagesSquare,
+  Share2,
+  ThumbsUp,
+} from "lucide-vue-next";
 
 import Loading from "@/components/App/loading.vue";
 
 import { useFollow } from "@/composables/useFollow";
 import { usePost } from "@/composables/usePostDetail";
+import { useLike } from "@/composables/useLike";
 
 const route = useRoute();
 const username = computed(() => route.params.username as string);
@@ -14,14 +21,39 @@ const slug = computed(() => route.params.slug as string);
 const baseUrl = import.meta.env.VITE_API_URL;
 // Post query
 const { post, postLoading, postError, postFetching } = usePost(username, slug);
+// Like
+const likeMutation = useLike();
+const likesCount = ref(0);
+watch(
+  () => post.value?.likes_count,
+  (newCount) => {
+    if (newCount !== undefined) {
+      likesCount.value = newCount;
+    }
+  },
+);
+const handleLike = () => {
+  if (!post.value) return;
+  likeMutation.mutate(post.value.id, {
+    onSuccess: (response) => {
+      likesCount.value = response.data.likes_count;
+    },
+  });
+};
 
 // Follow mutation
 const followMutation = useFollow();
-
 const handleFollow = () => {
   if (!post.value?.author) return;
 
-  followMutation.mutate(post.value.author.username);
+  followMutation.mutate(post.value.author.username, {
+    onSuccess: (response) => {
+      if (!post.value?.author) return;
+
+      post.value.author.is_following = response.is_following;
+      post.value.author.followers_count = response.followers;
+    },
+  });
 };
 </script>
 
@@ -76,31 +108,37 @@ const handleFollow = () => {
 
           <p class="text-sm text-gray-500">2min read</p>
         </div>
+        <!-- FOLLOW / ENGAGEMENT -->
+        <div class="mb-6 flex items-center border-b border-gray-100 pb-5">
+          <!-- Followers + Follow -->
+          <div class="flex items-center gap-5">
+            <!-- Follow Button -->
+            <button
+              type="button"
+              :disabled="followMutation.isPending.value"
+              @click="handleFollow"
+              :class="
+                post.author?.is_following
+                  ? 'inline-flex items-center justify-center rounded-full border border-gray-200 bg-gray-50 px-6 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60'
+                  : 'inline-flex items-center justify-center rounded-full bg-green-500 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-60'
+              "
+            >
+              {{ post.author?.is_following ? "Following" : "Follow" }}
+            </button>
+          </div>
 
-        <!-- FOLLOW -->
-        <div class="flex gap-4 items-center mb-4">
-          <p>
-            {{ post.author?.followers_count ?? 0 }}
-            followers
-          </p>
-
+          <!-- Likes -->
           <button
             type="button"
-            :disabled="followMutation.isPending.value"
-            @click="handleFollow"
-            :class="
-              post.author?.is_following
-                ? 'inline-flex items-center justify-center rounded-full bg-gray-200 px-8 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-300'
-                : 'inline-flex items-center justify-center rounded-full bg-green-500 px-8 py-3 text-sm font-semibold text-white hover:bg-green-600'
-            "
+            :disabled="likeMutation.isPending.value"
+            @click="handleLike"
+            class="ml-auto inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-5 py-2.5 text-gray-600 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {{
-              followMutation.isPending.value
-                ? "..."
-                : post.author?.is_following
-                  ? "Following"
-                  : "Follow"
-            }}
+            <ThumbsUp class="h-5 w-5" />
+
+            <span class="text-sm font-semibold text-gray-800">
+              {{ likesCount }}
+            </span>
           </button>
         </div>
 

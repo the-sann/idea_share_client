@@ -2,7 +2,7 @@
 import { login } from "@/services/auth.service";
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const email = ref("");
 const password = ref("");
@@ -14,6 +14,7 @@ const passwordError = ref("");
 const usernameError = ref("");
 
 const router = useRouter();
+const route = useRoute();
 const authStore = useAuthStore();
 
 const handleLogin = async () => {
@@ -29,10 +30,11 @@ const handleLogin = async () => {
       email: email.value,
       password: password.value,
     });
-
     authStore.setAuth(response.data.token, response.data.user);
 
-    router.push("/home");
+    const redirect = route.query.redirect as string | undefined;
+
+    router.push(redirect || "/");
   } catch (error: any) {
     console.log(error.response?.data);
 

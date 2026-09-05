@@ -7,13 +7,10 @@ export function usePublicProfile(username: Ref<string>) {
 
   return {
     user: query.data,
-
     profileLoading: query.isPending,
     profileError: query.isError,
     profileFetching: query.isFetching,
-
     profileErrorMessage: query.error,
-
     refetchProfile: query.refetch,
   };
 }

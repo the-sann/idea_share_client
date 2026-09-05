@@ -16,7 +16,7 @@ const emit = defineEmits<{
 }>();
 const handleLogout = () => {
   authStore.logout();
-  router.push({ name: "login" });
+  router.push({ name: "home" });
 };
 const goToEditProfile = () => {
   router.push({ name: "edit-profile" });
@@ -74,6 +74,10 @@ const goToProfile = () => {
               <RouteIcon :size="18" />
               View Profile
             </button>
+          </div>
+          <div class="grid grid-cols-1 gap-1 py-3">
+            <dt class="font-medium text-gray-900">Name</dt>
+            <dd class="text-gray-700">{{ authStore.user?.name }}</dd>
           </div>
           <div class="grid grid-cols-1 gap-1 py-3">
             <dt class="font-medium text-gray-900">User Name</dt>

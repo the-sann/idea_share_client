@@ -16,13 +16,8 @@ const authStore = useAuthStore();
 
 const username = computed(() => route.params.username as string);
 
-const {
-  user,
-  profileLoading,
-  profileError,
-  profileFetching,
-  profileErrorMessage,
-} = usePublicProfile(username);
+const { user, profileLoading, profileError, profileErrorMessage } =
+  usePublicProfile(username);
 </script>
 
 <template>
@@ -40,11 +35,6 @@ const {
     <div v-else-if="!user">User not found.</div>
 
     <template v-else>
-      <!-- Background refetch -->
-      <div v-if="profileFetching" class="px-4 py-2 text-sm text-gray-500">
-        Refreshing...
-      </div>
-
       <PublicContent :user="user" :posts="user.posts ?? []" />
     </template>
   </component>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Post } from "@/types/types";
 import { MoveRight } from "lucide-vue-next";
+
 import { useRouter } from "vue-router";
 
 const props = defineProps<{
@@ -13,6 +14,7 @@ const formatDate = (date: string) => {
 };
 
 const viewPost = () => {
+  console.log("viewPost", props.post);
   router.push({
     name: "post-show",
     params: {
