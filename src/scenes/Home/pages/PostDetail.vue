@@ -18,7 +18,7 @@ import { useLike } from "@/composables/useLike";
 const route = useRoute();
 const username = computed(() => route.params.username as string);
 const slug = computed(() => route.params.slug as string);
-const assetBaseUrl = import.meta.env.VITE_ASSET_URL;
+const assetBaseUrl = import.meta.env.VITE_API_URL;
 // Post query
 const { post, postLoading, postError, postFetching } = usePost(username, slug);
 // Like
