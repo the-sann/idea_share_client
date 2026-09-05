@@ -134,7 +134,7 @@ const viewProfile = () => {
     <!-- Post Image -->
     <img
       v-if="post.image"
-      :src="`http://localhost:8000/storage/${post.image}`"
+      :src="`${baseUrl}/storage/${post.image}`"
       :alt="post.title"
       class="h-64 w-full object-cover sm:h-80 lg:h-96"
     />
